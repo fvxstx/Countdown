@@ -1,0 +1,23 @@
+.contador {
+  @include display-flx;
+  list-style: none;
+  gap: 20px;
+
+  color: $black;
+  font-weight: 500;
+  font-size: 70px;
+
+  @include for-phone-only {
+    font-size: 35px;
+  }
+
+  .p {
+    font-size: 14px;
+    color: $text-color;
+    font-weight: 300;
+
+    @include for-phone-only {
+      font-size: 12px;
+    }
+  }
+}

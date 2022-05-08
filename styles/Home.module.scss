@@ -3,20 +3,47 @@ $purple: #6c63ff;
 $light-grey: #c8c8c8;
 $text-color: #9c9ab6;
 
-.main {
+@mixin display-flx {
   display: flex;
   align-items: center;
+}
+
+@mixin for-phone-only {
+  @media (max-width: 767.98px) {
+    @content;
+  }
+}
+
+@mixin for-tablet-only {
+  @media (min-width: 768px) and (max-width: 1199.98px) {
+    @content;
+  }
+}
+
+@import "Count.module";
+
+.main {
+  @include display-flx;
   justify-content: center;
   text-align: center;
   gap: 50px;
 
   .text {
-    display: flex;
+    @include display-flx;
     flex-direction: column;
-    align-items: center;
     gap: 10px;
 
     margin-bottom: 50px;
+
+    @include for-tablet-only {
+      margin-bottom: 0;
+      margin-top: 50px;
+    }
+
+    @include for-phone-only {
+      margin-bottom: 0;
+      margin-top: 100px;
+    }
   }
 
   .title {
@@ -24,6 +51,10 @@ $text-color: #9c9ab6;
     font-size: 36px;
     font-weight: 700;
     letter-spacing: 3px;
+
+    @include for-phone-only {
+      font-size: 26px;
+    }
   }
 
   .subtitle {
@@ -48,6 +79,14 @@ $text-color: #9c9ab6;
 
   .rocket {
     width: 550px;
+
+    @include for-tablet-only {
+      display: none;
+    }
+
+    @include for-phone-only {
+      display: none;
+    }
   }
 }
 
@@ -56,21 +95,4 @@ $text-color: #9c9ab6;
   left: 0;
   bottom: 0;
   width: 100%;
-}
-
-.contador {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  color: $black;
-  font-weight: 500;
-  font-size: 70px;
-
-  .p {
-    font-size: 14px;
-    color: $text-color;
-    font-weight: 300;
-  }
 }
