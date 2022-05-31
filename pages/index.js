@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
@@ -47,7 +47,58 @@ function Contador() {
   );
 }
 
+function Modal({ show, onClose }) {
+  if (show) {
+    return (
+      <div className={styles.modal}>
+        <div className={styles.modal__container}>
+          <h1 className={styles.modal__title}>Inscreva-se</h1>
+          <p className={styles.modal__p}>
+            Digite seu nome e email para ser avisado quando for o dia
+          </p>
+
+          <form className={styles.form}>
+            <input
+              className={styles.form__inputT}
+              type="text"
+              placeholder="Nome"
+              id="nome"
+              name="nome"
+            />
+            <input
+              className={styles.form__inputT}
+              type="email"
+              placeholder="Email"
+              id="email"
+              name="email"
+            />
+
+            <div className={styles.form__buttons}>
+              <button
+                className={styles.form__buttonC}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onClose();
+                }}
+              >
+                Cancelar
+              </button>
+              <button className={styles.form__buttonE} type="submit">
+                Enviar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  } else {
+    return null;
+  }
+}
+
 export default function Home() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div>
       <Head>
@@ -65,7 +116,9 @@ export default function Home() {
           <p className={styles.subtitle}>
             Inscreva-se para saber mais sobre o lançamento
           </p>
-          <button className={styles.button}>Inscreva-se</button>
+          <button className={styles.button} onClick={() => setShowModal(true)}>
+            Inscreva-se
+          </button>
         </div>
         <img src="/images/rocket.svg" alt="Rocket" className={styles.rocket} />
       </main>
@@ -73,6 +126,13 @@ export default function Home() {
         src="/images/bottom-image.svg"
         alt="top images"
         className={styles.img_bottom}
+      />
+
+      <Modal
+        show={showModal}
+        onClose={() => {
+          setShowModal(false);
+        }}
       />
     </div>
   );
