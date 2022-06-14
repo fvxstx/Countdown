@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imphdnp4dHd0Z3poZXB1emNoeWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTUyMzI2OTAsImV4cCI6MTk3MDgwODY5MH0.upiXI3HDWV4RRmAz4TxKLy09uR_y6diRi_QRci52n50";
+const SUPABASE_URL = "https://javzxtwtgzhepuzchyde.supabase.co";
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function Contador() {
   const count = "2022-07-24";
@@ -47,7 +53,78 @@ function Contador() {
   );
 }
 
+function Form({ close }) {
+  const [email, setEmail] = useState("");
+  const [nome, setNome] = useState("");
+
+  async function handleNewEmail(newEmail) {
+    await supabaseClient.from("email").insert([{ email: newEmail }]);
+  }
+
+  const handleSubmit = async (ev) => {
+    ev.preventDefault();
+    handleNewEmail(email);
+
+    const formData = {
+      nome,
+      email,
+    };
+
+    fetch("/api/sendgrid", {
+      method: "post",
+      body: JSON.stringify(formData),
+    }).then((res) => {
+      if (res.status === 200) {
+        setNome("");
+        setEmail("");
+      }
+    });
+  };
+
+  return (
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <input
+        className={styles.form__inputT}
+        type="text"
+        placeholder="Nome"
+        name="nome"
+        required
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+      />
+      <input
+        className={styles.form__inputT}
+        type="email"
+        placeholder="Email"
+        id="email"
+        name="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <div className={styles.form__buttons}>
+        <button
+          className={styles.form__buttonC}
+          onClick={(e) => {
+            e.preventDefault();
+            close();
+          }}
+        >
+          Cancelar
+        </button>
+        <button className={styles.form__buttonE} type="submit">
+          Enviar
+        </button>
+      </div>
+    </form>
+  );
+}
+
 function Modal({ show, onClose }) {
+  const [email, setEmail] = useState("");
+  const [nome, setNome] = useState("");
+
   if (show) {
     return (
       <div className={styles.modal}>
@@ -57,37 +134,7 @@ function Modal({ show, onClose }) {
             Digite seu nome e email para ser avisado quando for o dia
           </p>
 
-          <form className={styles.form}>
-            <input
-              className={styles.form__inputT}
-              type="text"
-              placeholder="Nome"
-              id="nome"
-              name="nome"
-            />
-            <input
-              className={styles.form__inputT}
-              type="email"
-              placeholder="Email"
-              id="email"
-              name="email"
-            />
-
-            <div className={styles.form__buttons}>
-              <button
-                className={styles.form__buttonC}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onClose();
-                }}
-              >
-                Cancelar
-              </button>
-              <button className={styles.form__buttonE} type="submit">
-                Enviar
-              </button>
-            </div>
-          </form>
+          <Form close={onClose} />
         </div>
       </div>
     );
@@ -98,6 +145,16 @@ function Modal({ show, onClose }) {
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
+  const [allEmails, setAllEmails] = useState([]);
+
+  useEffect(() => {
+    supabaseClient
+      .from("email")
+      .select()
+      .then(({ data }) => {
+        setAllEmails(data);
+      });
+  }, []);
 
   return (
     <div>
