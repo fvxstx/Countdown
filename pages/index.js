@@ -4,28 +4,31 @@ import { createClient } from "@supabase/supabase-js";
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imphdnp4dHd0Z3poZXB1emNoeWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTUyMzI2OTAsImV4cCI6MTk3MDgwODY5MH0.upiXI3HDWV4RRmAz4TxKLy09uR_y6diRi_QRci52n50";
-const SUPABASE_URL = "https://javzxtwtgzhepuzchyde.supabase.co";
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
-function Contador() {
-  const count = "2022-07-24";
+function Contador({ timeExact }) {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  setInterval(() => {
-    const dateNow = new Date().getTime();
-    const dif = Date.parse(count) - dateNow;
+  async function attEmail(newEmail) {
+    await supabaseClient
+      .from("email")
+      .update({ sended: true })
+      .match({ email: newEmail.email });
+  }
 
+  setInterval(() => {
+    const dif = timeExact();
     setDays(Math.floor(dif / (1000 * 60 * 60 * 24)));
     setHours(Math.floor((dif / (1000 * 60 * 60)) % 24));
     setMinutes(Math.floor((dif / 1000 / 60) % 60));
     setSeconds(Math.floor((dif / 1000) % 60));
   }, 1000);
-
   return (
     <>
       <ul className={styles.contador}>
@@ -66,7 +69,7 @@ function Form({ close }) {
     handleNewEmail(email);
 
     const formData = {
-      nome,
+      lastEmail: false,
       email,
     };
 
@@ -145,16 +148,41 @@ function Modal({ show, onClose }) {
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
-  const [allEmails, setAllEmails] = useState([]);
 
   useEffect(() => {
-    supabaseClient
-      .from("email")
-      .select()
-      .then(({ data }) => {
-        setAllEmails(data);
-      });
+    sendAllEmails(exactTime());
   }, []);
+
+  function exactTime() {
+    const count = "2022-07-24";
+    const dateNow = new Date().getTime();
+    const dif = Date.parse(count) - dateNow;
+
+    return dif;
+  }
+
+  async function sendAllEmails(time) {
+    if (time === 1) {
+      const { data, error } = await supabaseClient.from("email").select();
+      console.log(data);
+
+      data.map((bEmail) => {
+        if (bEmail.sended == false) {
+          const formData = {
+            email: bEmail.email,
+            lastEmail: true,
+          };
+
+          /* fetch("/api/sendgrid", {
+            method: "post",
+            body: JSON.stringify(formData),
+          });
+ */
+          attEmail(bEmail);
+        }
+      });
+    }
+  }
 
   return (
     <div>
@@ -168,7 +196,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.text}>
           <h2 className={styles.title}>READY TO LAUNCH IN...</h2>
-          <Contador />
+          <Contador timeExact={exactTime} />
 
           <p className={styles.subtitle}>
             Inscreva-se para saber mais sobre o lançamento
