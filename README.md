@@ -26,10 +26,13 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [React.js](https://reactjs.org/)
 - [Next.js](https://nextjs.org/)
 - [SASS](https://sass-lang.com/)
+- [Sendgrid](https://sendgrid.com/)
+- [Supabase](https://supabase.com/)
 
 ## 💻 Projeto
 
-Um contador de um tempo determinado, atualmente ele está contando o tempo para uma viajem
+Um contador de um tempo determinado que enviará um email quando para voccê quando<br>
+acabar, atualmente ele está contando o tempo para uma viajem
 
 ## :memo: Licença
 
