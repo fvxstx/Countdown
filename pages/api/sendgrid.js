@@ -9,9 +9,8 @@ export default async (req, res) => {
     const data = {
       to: `${body.email}`,
       from: "fvxstx@programmer.net",
-      subject: "[Website Name] Contact Form - New Message",
-      text: `${body.email} Boa boa entrou no ultimo email`,
-      html: "<br>Boa boa entrou porra</br>",
+      subject: "[Countdown] Final Contact",
+      templateId: "d-1bb313b8ef3046bebf19a19da13db514",
     };
     sendgrid.send(data);
     return res.status(200).json({ status: "Ok" });
