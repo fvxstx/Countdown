@@ -19,7 +19,7 @@ export default async (req, res) => {
     const data = {
       to: `${body.email}`,
       from: "fvxstx@programmer.net",
-      subject: "[Website Name] Contact Form - New Message",
+      subject: "[Countdown] Contact Form - New Message",
       templateId: "d-d6246a69f8ef4ff6889f1699e71d1cf7",
     };
 

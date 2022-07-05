@@ -195,11 +195,11 @@ export default function Home() {
       <img src="/images/top-image.svg" alt="top images" />
       <main className={styles.main}>
         <div className={styles.text}>
-          <h2 className={styles.title}>READY TO LAUNCH IN...</h2>
+          <h2 className={styles.title}>PREPARE PARA O DIA...</h2>
           <Contador timeExact={exactTime} />
 
           <p className={styles.subtitle}>
-            Inscreva-se para saber mais sobre o lançamento
+            Inscreva-se para saber mais sobre o grande dia
           </p>
           <button className={styles.button} onClick={() => setShowModal(true)}>
             Inscreva-se
