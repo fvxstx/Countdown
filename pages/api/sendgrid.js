@@ -12,9 +12,10 @@ export default async (req, res) => {
       subject: "[Countdown] Final Contact",
       templateId: "d-1bb313b8ef3046bebf19a19da13db514",
     };
+
     sendgrid.send(data);
     return res.status(200).json({ status: "Ok" });
-  } else if (body.email == false) {
+  } else if (body.lastEmail == false) {
     const data = {
       to: `${body.email}`,
       from: "fvxstx@programmer.net",
