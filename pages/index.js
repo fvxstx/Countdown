@@ -4,13 +4,9 @@ import { createClient } from "@supabase/supabase-js";
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 
-const NEXT_PUBLIC_SUPABASE_URL = "https://javzxtwtgzhepuzchyde.supabase.co";
-const NEXT_PUBLIC_SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imphdnp4dHd0Z3poZXB1emNoeWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTUyMzI2OTAsImV4cCI6MTk3MDgwODY5MH0.upiXI3HDWV4RRmAz4TxKLy09uR_y6diRi_QRci52n50";
-
 const supabaseClient = createClient(
-  NEXT_PUBLIC_SUPABASE_URL,
-  NEXT_PUBLIC_SUPABASE_ANON_KEY
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
 function Contador({ timeExact }) {
