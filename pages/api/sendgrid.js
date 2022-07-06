@@ -14,7 +14,7 @@ export default async (req, res) => {
     };
     sendgrid.send(data);
     return res.status(200).json({ status: "Ok" });
-  } else {
+  } else if (body.email == false) {
     const data = {
       to: `${body.email}`,
       from: "fvxstx@programmer.net",
