@@ -82,7 +82,7 @@ function Form({ close }) {
       <input
         className={styles.form__inputT}
         type="text"
-        placeholder="Nome"
+        placeholder="Name"
         name="nome"
         required
         value={nome}
@@ -107,10 +107,10 @@ function Form({ close }) {
             close();
           }}
         >
-          Cancelar
+          Cancel
         </button>
         <button className={styles.form__buttonE} type="submit">
-          Enviar
+          Send
         </button>
       </div>
     </form>
@@ -122,9 +122,9 @@ function Modal({ show, onClose }) {
     return (
       <div className={styles.modal}>
         <div className={styles.modal__container}>
-          <h1 className={styles.modal__title}>Inscreva-se</h1>
+          <h1 className={styles.modal__title}>Subscribe</h1>
           <p className={styles.modal__p}>
-            Digite seu nome e email para ser avisado quando for o dia
+            Enter your name and email to be notified when the day is
           </p>
 
           <Form close={onClose} />
