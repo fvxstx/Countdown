@@ -26,22 +26,22 @@ function Contador({ timeExact }) {
     <>
       <ul className={styles.contador}>
         <li>
-          <p className={styles.p}>Dias</p>
+          <p className={styles.p}>Days</p>
           {days}
         </li>
         :
         <li>
-          <p className={styles.p}>Horas</p>
+          <p className={styles.p}>Hours</p>
           {hours}
         </li>
         :
         <li>
-          <p className={styles.p}>Minutos</p>
+          <p className={styles.p}>Minutes</p>
           {minutes}
         </li>
         :
         <li>
-          <p className={styles.p}>Segundos</p>
+          <p className={styles.p}>Seconds</p>
           {seconds}
         </li>
       </ul>
@@ -191,14 +191,14 @@ export default function Home() {
       <img src="/images/top-image.svg" alt="top images" />
       <main className={styles.main}>
         <div className={styles.text}>
-          <h2 className={styles.title}>PREPARE PARA O DIA...</h2>
+          <h2 className={styles.title}>GET READY FOR THE DAY...</h2>
           <Contador timeExact={exactTime} />
 
           <p className={styles.subtitle}>
-            Inscreva-se para saber mais sobre o grande dia
+            Subscribe to know more about the day
           </p>
           <button className={styles.button} onClick={() => setShowModal(true)}>
-            Inscreva-se
+            Subscribe
           </button>
         </div>
         <img src="/images/rocket.svg" alt="Rocket" className={styles.rocket} />

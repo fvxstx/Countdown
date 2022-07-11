@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps }) {
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="shortcut icon" href="/images/favicon.png" />
       </Head>
       <Component {...pageProps} />
     </>
