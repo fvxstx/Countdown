@@ -20,6 +20,12 @@ $text-color: #9c9ab6;
   }
 }
 
+@mixin for-small-height {
+  @media (max-height: 680px) and (min-width: 1420px) {
+    @content;
+  }
+}
+
 @import "Count.module", "Modal.module";
 
 .main {
@@ -54,6 +60,10 @@ $text-color: #9c9ab6;
 
     @include for-phone-only {
       font-size: 26px;
+    }
+
+    @include for-small-height {
+      font-size: 32px;
     }
   }
 
@@ -91,6 +101,10 @@ $text-color: #9c9ab6;
 
     @include for-phone-only {
       display: none;
+    }
+
+    @include for-small-height {
+      width: 450px;
     }
   }
 }

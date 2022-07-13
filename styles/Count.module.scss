@@ -11,6 +11,10 @@
     font-size: 35px;
   }
 
+  @include for-small-height {
+    font-size: 60px;
+  }
+
   .p {
     font-size: 14px;
     color: $text-color;
