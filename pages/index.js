@@ -124,7 +124,7 @@ function Modal({ show, onClose }) {
         <div className={styles.modal__container}>
           <h1 className={styles.modal__title}>Subscribe</h1>
           <p className={styles.modal__p}>
-            Enter your name and email to be notified when the day is
+            Enter your name and email to be notified when everything done.
           </p>
 
           <Form close={onClose} />
@@ -144,7 +144,7 @@ export default function Home() {
   }, []);
 
   function exactTime() {
-    const count = "2022-07-24";
+    const count = "2022-11-13";
     const dateNow = new Date().getTime();
     const dif = Date.parse(count) - dateNow;
 
