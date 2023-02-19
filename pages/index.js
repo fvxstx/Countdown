@@ -144,7 +144,7 @@ export default function Home() {
   }, []);
 
   function exactTime() {
-    const count = "2022-11-13";
+    const count = "2026-12-31";
     const dateNow = new Date().getTime();
     const dif = Date.parse(count) - dateNow;
 
